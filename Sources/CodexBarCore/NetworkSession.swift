@@ -53,6 +53,7 @@ public enum NetworkSession {
     private static func proxyDictionary(from proxy: ProxyConfiguration) -> [String: Any] {
         var dict: [String: Any] = [:]
 
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         switch proxy.type {
         case .http:
             // HTTP proxy — also route HTTPS through it
@@ -87,6 +88,32 @@ public enum NetworkSession {
                 dict[kCFProxyPasswordKey as String] = proxy.password ?? ""
             }
         }
+        #else
+        // Linux: use string keys directly (CFNetwork constants are not available)
+        switch proxy.type {
+        case .http, .https:
+            dict["HTTPEnable"] = true
+            dict["HTTPProxy"] = proxy.host
+            dict["HTTPPort"] = proxy.port
+            dict["HTTPSEnable"] = true
+            dict["HTTPSProxy"] = proxy.host
+            dict["HTTPSPort"] = proxy.port
+
+        case .socks5:
+            dict["SOCKSProxy"] = proxy.host
+            dict["SOCKSPort"] = proxy.port
+        }
+
+        if let username = proxy.username, !username.isEmpty {
+            if proxy.type == .socks5 {
+                dict["SOCKSUser"] = username
+                dict["SOCKSPassword"] = proxy.password ?? ""
+            } else {
+                dict["HTTPProxyUsername"] = username
+                dict["HTTPProxyPassword"] = proxy.password ?? ""
+            }
+        }
+        #endif
 
         return dict
     }

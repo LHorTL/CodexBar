@@ -94,37 +94,38 @@ struct AdvancedPane: View {
 
                 SettingsSection(
                     title: "HTTP Proxy",
-                    caption: "Route all API requests through a proxy server.") {
-                        PreferenceToggleRow(
-                            title: "Enable proxy",
-                            subtitle: "When disabled, direct connections are used.",
-                            binding: self.$settings.proxyEnabled)
+                    caption: "Route all API requests through a proxy server.")
+                {
+                    PreferenceToggleRow(
+                        title: "Enable proxy",
+                        subtitle: "When disabled, direct connections are used.",
+                        binding: self.$settings.proxyEnabled)
 
-                        if self.settings.proxyEnabled {
-                            Picker("Type", selection: self.$settings.proxyType) {
-                                ForEach(ProxyType.allCases, id: \.self) { type in
-                                    Text(type.label).tag(type)
-                                }
+                    if self.settings.proxyEnabled {
+                        Picker("Type", selection: self.$settings.proxyType) {
+                            ForEach(ProxyType.allCases, id: \.self) { type in
+                                Text(type.label).tag(type)
                             }
-                            .pickerStyle(.segmented)
-
-                            HStack(spacing: 8) {
-                                TextField("Host", text: self.$settings.proxyHost)
-                                    .textFieldStyle(.roundedBorder)
-                                TextField(
-                                    "Port",
-                                    value: self.$settings.proxyPort,
-                                    format: .number)
-                                    .textFieldStyle(.roundedBorder)
-                                    .frame(width: 80)
-                            }
-
-                            TextField("Username (optional)", text: self.$settings.proxyUsername)
-                                .textFieldStyle(.roundedBorder)
-                            SecureField("Password (optional)", text: self.$settings.proxyPassword)
-                                .textFieldStyle(.roundedBorder)
                         }
+                        .pickerStyle(.segmented)
+
+                        HStack(spacing: 8) {
+                            TextField("Host", text: self.$settings.proxyHost)
+                                .textFieldStyle(.roundedBorder)
+                            TextField(
+                                "Port",
+                                value: self.$settings.proxyPort,
+                                format: .number)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(width: 80)
+                        }
+
+                        TextField("Username (optional)", text: self.$settings.proxyUsername)
+                            .textFieldStyle(.roundedBorder)
+                        SecureField("Password (optional)", text: self.$settings.proxyPassword)
+                            .textFieldStyle(.roundedBorder)
                     }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 20)
