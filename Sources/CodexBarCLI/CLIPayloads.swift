@@ -103,7 +103,7 @@ enum StatusFetcher {
         var request = URLRequest(url: apiURL)
         request.timeoutInterval = 10
 
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await NetworkSession.shared.data(for: request)
 
         struct Response: Decodable {
             struct Status: Decodable {

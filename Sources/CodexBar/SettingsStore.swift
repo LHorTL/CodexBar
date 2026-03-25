@@ -155,6 +155,7 @@ final class SettingsStore {
         self.openAIWebAccessEnabled = self.codexCookieSource.isEnabled
         Self.sharedDefaults?.set(self.debugDisableKeychainAccess, forKey: "debugDisableKeychainAccess")
         KeychainAccessGate.isDisabled = self.debugDisableKeychainAccess
+        self.applyProxyConfiguration()
     }
 }
 
@@ -230,6 +231,12 @@ extension SettingsStore {
             forKey: "mergedOverviewSelectedProviders") as? [String] ?? []
         let selectedMenuProviderRaw = userDefaults.string(forKey: "selectedMenuProvider")
         let providerDetectionCompleted = userDefaults.object(forKey: "providerDetectionCompleted") as? Bool ?? false
+        let proxyEnabled = userDefaults.object(forKey: "proxyEnabled") as? Bool ?? false
+        let proxyTypeRaw = userDefaults.string(forKey: "proxyType") ?? ProxyType.http.rawValue
+        let proxyHost = userDefaults.string(forKey: "proxyHost") ?? ""
+        let proxyPort = userDefaults.object(forKey: "proxyPort") as? Int ?? 8080
+        let proxyUsername = userDefaults.string(forKey: "proxyUsername") ?? ""
+        let proxyPassword = userDefaults.string(forKey: "proxyPassword") ?? ""
 
         return SettingsDefaultsState(
             refreshFrequency: refreshFrequency,
@@ -264,7 +271,13 @@ extension SettingsStore {
             mergedMenuLastSelectedWasOverview: mergedMenuLastSelectedWasOverview,
             mergedOverviewSelectedProvidersRaw: mergedOverviewSelectedProvidersRaw,
             selectedMenuProviderRaw: selectedMenuProviderRaw,
-            providerDetectionCompleted: providerDetectionCompleted)
+            providerDetectionCompleted: providerDetectionCompleted,
+            proxyEnabled: proxyEnabled,
+            proxyTypeRaw: proxyTypeRaw,
+            proxyHost: proxyHost,
+            proxyPort: proxyPort,
+            proxyUsername: proxyUsername,
+            proxyPassword: proxyPassword)
     }
 }
 

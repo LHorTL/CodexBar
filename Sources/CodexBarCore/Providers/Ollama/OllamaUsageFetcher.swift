@@ -243,7 +243,10 @@ public struct OllamaUsageFetcher: Sendable {
     public init(browserDetection: BrowserDetection) {
         self.browserDetection = browserDetection
         self.makeURLSession = { delegate in
-            URLSession(configuration: .ephemeral, delegate: delegate, delegateQueue: nil)
+            URLSession(
+                configuration: NetworkSession.applyProxy(to: .ephemeral),
+                delegate: delegate,
+                delegateQueue: nil)
         }
     }
 

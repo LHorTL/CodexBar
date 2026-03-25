@@ -478,6 +478,73 @@ extension SettingsStore {
         get { self.debugLoadingPatternRaw.flatMap(LoadingPattern.init(rawValue:)) }
         set { self.debugLoadingPatternRaw = newValue?.rawValue }
     }
+
+    // MARK: - Proxy
+
+    var proxyEnabled: Bool {
+        get { self.defaultsState.proxyEnabled }
+        set {
+            self.defaultsState.proxyEnabled = newValue
+            self.userDefaults.set(newValue, forKey: "proxyEnabled")
+            self.applyProxyConfiguration()
+        }
+    }
+
+    var proxyType: ProxyType {
+        get { ProxyType(rawValue: self.defaultsState.proxyTypeRaw) ?? .http }
+        set {
+            self.defaultsState.proxyTypeRaw = newValue.rawValue
+            self.userDefaults.set(newValue.rawValue, forKey: "proxyType")
+            self.applyProxyConfiguration()
+        }
+    }
+
+    var proxyHost: String {
+        get { self.defaultsState.proxyHost }
+        set {
+            self.defaultsState.proxyHost = newValue
+            self.userDefaults.set(newValue, forKey: "proxyHost")
+            self.applyProxyConfiguration()
+        }
+    }
+
+    var proxyPort: Int {
+        get { self.defaultsState.proxyPort }
+        set {
+            self.defaultsState.proxyPort = newValue
+            self.userDefaults.set(newValue, forKey: "proxyPort")
+            self.applyProxyConfiguration()
+        }
+    }
+
+    var proxyUsername: String {
+        get { self.defaultsState.proxyUsername }
+        set {
+            self.defaultsState.proxyUsername = newValue
+            self.userDefaults.set(newValue, forKey: "proxyUsername")
+            self.applyProxyConfiguration()
+        }
+    }
+
+    var proxyPassword: String {
+        get { self.defaultsState.proxyPassword }
+        set {
+            self.defaultsState.proxyPassword = newValue
+            self.userDefaults.set(newValue, forKey: "proxyPassword")
+            self.applyProxyConfiguration()
+        }
+    }
+
+    func applyProxyConfiguration() {
+        let config = ProxyConfiguration(
+            enabled: self.proxyEnabled,
+            type: self.proxyType,
+            host: self.proxyHost,
+            port: self.proxyPort,
+            username: self.proxyUsername.isEmpty ? nil : self.proxyUsername,
+            password: self.proxyPassword.isEmpty ? nil : self.proxyPassword)
+        NetworkSession.configure(proxy: config)
+    }
 }
 
 extension SettingsStore {

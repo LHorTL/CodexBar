@@ -34,4 +34,10 @@ struct SettingsDefaultsState {
     var mergedOverviewSelectedProvidersRaw: [String]
     var selectedMenuProviderRaw: String?
     var providerDetectionCompleted: Bool
+    var proxyEnabled: Bool
+    var proxyTypeRaw: String
+    var proxyHost: String
+    var proxyPort: Int
+    var proxyUsername: String
+    var proxyPassword: String
 }

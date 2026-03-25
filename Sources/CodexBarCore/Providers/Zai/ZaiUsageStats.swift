@@ -303,7 +303,7 @@ public struct ZaiUsageFetcher: Sendable {
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "authorization")
         request.setValue("application/json", forHTTPHeaderField: "accept")
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await NetworkSession.shared.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ZaiUsageError.networkError("Invalid response")

@@ -260,7 +260,7 @@ public struct OpenCodeUsageFetcher: Sendable {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
 
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        let (data, response) = try await NetworkSession.shared.data(for: urlRequest)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw OpenCodeUsageError.networkError("Invalid response")
         }

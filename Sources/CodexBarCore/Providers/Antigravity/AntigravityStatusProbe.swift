@@ -630,7 +630,8 @@ public struct AntigravityStatusProbe: Sendable {
         let config = URLSessionConfiguration.ephemeral
         config.timeoutIntervalForRequest = context.timeout
         config.timeoutIntervalForResource = context.timeout
-        let session = URLSession(configuration: config, delegate: InsecureSessionDelegate(), delegateQueue: nil)
+        let proxiedConfig = NetworkSession.applyProxy(to: config)
+        let session = URLSession(configuration: proxiedConfig, delegate: InsecureSessionDelegate(), delegateQueue: nil)
         defer { session.invalidateAndCancel() }
 
         let (data, response) = try await session.data(for: request)

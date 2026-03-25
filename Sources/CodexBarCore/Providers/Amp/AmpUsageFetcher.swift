@@ -248,7 +248,10 @@ public struct AmpUsageFetcher: Sendable {
         request.setValue("https://ampcode.com", forHTTPHeaderField: "origin")
         request.setValue(Self.settingsURL.absoluteString, forHTTPHeaderField: "referer")
 
-        let session = URLSession(configuration: .ephemeral, delegate: diagnostics, delegateQueue: nil)
+        let session = URLSession(
+            configuration: NetworkSession.applyProxy(to: .ephemeral),
+            delegate: diagnostics,
+            delegateQueue: nil)
         let (data, response) = try await session.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw AmpUsageError.networkError("Invalid response")
