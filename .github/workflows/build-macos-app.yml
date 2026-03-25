@@ -31,36 +31,57 @@ jobs:
         run: |
           set -euo pipefail
           BIN_DIR="$(swift build -c release --product CodexBar --show-bin-path)"
+          BUILD_DIR="$(dirname "$BIN_DIR")"
 
           APP_DIR="$(mktemp -d)/CodexBar.app"
           mkdir -p "$APP_DIR/Contents/MacOS"
+          mkdir -p "$APP_DIR/Contents/Frameworks"
           mkdir -p "$APP_DIR/Contents/Resources"
 
+          # Copy main binary
           cp "$BIN_DIR/CodexBar" "$APP_DIR/Contents/MacOS/CodexBar"
 
-          # Create minimal Info.plist
+          # Copy Sparkle.framework from build artifacts
+          SPARKLE_SRC="$(find "$BUILD_DIR" -path "*/Sparkle.framework" -type d | head -1)"
+          if [[ -z "$SPARKLE_SRC" ]]; then
+            # Fallback: find in checkouts
+            SPARKLE_SRC="$(find .build/checkouts -path "*/Sparkle.framework" -type d | head -1)"
+          fi
+          if [[ -n "$SPARKLE_SRC" ]]; then
+            cp -R "$SPARKLE_SRC" "$APP_DIR/Contents/Frameworks/Sparkle.framework"
+          fi
+
+          # Copy any other dylibs the binary needs from the build dir
+          for dylib in "$BIN_DIR"/*.dylib; do
+            [[ -f "$dylib" ]] && cp "$dylib" "$APP_DIR/Contents/MacOS/"
+          done
+
+          # Fix rpath to look in Frameworks
+          install_name_tool -add_rpath @executable_path/../Frameworks "$APP_DIR/Contents/MacOS/CodexBar" 2>/dev/null || true
+
+          # Create Info.plist
           cat > "$APP_DIR/Contents/Info.plist" << 'PLIST'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>CFBundleExecutable</key>
-              <string>CodexBar</string>
-              <key>CFBundleIdentifier</key>
-              <string>com.steipete.codexbar</string>
-              <key>CFBundleName</key>
-              <string>CodexBar</string>
-              <key>CFBundlePackageType</key>
-              <string>APPL</string>
-              <key>CFBundleShortVersionString</key>
-              <string>0.20.0</string>
-              <key>LSUIElement</key>
-              <true/>
-              <key>LSMinimumSystemVersion</key>
-              <string>14.0</string>
-          </dict>
-          </plist>
-          PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>CodexBar</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.steipete.codexbar</string>
+    <key>CFBundleName</key>
+    <string>CodexBar</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.20.0</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+</dict>
+</plist>
+PLIST
 
           echo "app_dir=$APP_DIR" >> "$GITHUB_OUTPUT"
 
