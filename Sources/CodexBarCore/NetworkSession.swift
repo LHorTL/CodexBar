@@ -9,10 +9,10 @@ import FoundationNetworking
 /// `URLSession.shared`. The app layer configures proxy settings via `NetworkSession.configure(proxy:)`.
 public enum NetworkSession {
     private static let lock = NSLock()
-    nonisolated(unsafe) private static var _session: URLSession = .shared
-    nonisolated(unsafe) private static var _configuration: ProxyConfiguration?
+    private nonisolated(unsafe) static var _session: URLSession = .shared
+    private nonisolated(unsafe) static var _configuration: ProxyConfiguration?
     /// Track the non-.shared session so we can invalidate it on reconfigure.
-    nonisolated(unsafe) private static var _customSession: URLSession?
+    private nonisolated(unsafe) static var _customSession: URLSession?
 
     /// The URLSession all providers should use instead of `URLSession.shared`.
     public static var shared: URLSession {
