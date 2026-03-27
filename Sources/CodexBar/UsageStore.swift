@@ -69,6 +69,9 @@ extension UsageStore {
     }
 }
 
+private let dynamicRefreshMaxIntervalMultiplier = 8
+private let dynamicRefreshIdleThreshold = 3
+
 @MainActor
 @Observable
 final class UsageStore {
@@ -148,8 +151,6 @@ final class UsageStore {
     @ObservationIgnored private var claudeActivityMonitor: ClaudeActivityMonitor?
     @ObservationIgnored private var idleTickCount: Int = 0
     @ObservationIgnored private var currentIntervalMultiplier: Int = 1
-    private static let maxIntervalMultiplier = 8
-    private static let idleThreshold = 3
     @ObservationIgnored private var timerTask: Task<Void, Never>?
     @ObservationIgnored private var tokenTimerTask: Task<Void, Never>?
     @ObservationIgnored private var tokenRefreshSequenceTask: Task<Void, Never>?
@@ -502,7 +503,7 @@ final class UsageStore {
 
                     // If idle beyond threshold, skip this refresh cycle.
                     let idle = await self.idleTickCount
-                    if idle >= Self.idleThreshold {
+                    if idle >= dynamicRefreshIdleThreshold {
                         continue
                     }
                 }
@@ -519,10 +520,10 @@ final class UsageStore {
             self.currentIntervalMultiplier = 1
         } else {
             self.idleTickCount += 1
-            if self.idleTickCount >= Self.idleThreshold {
+            if self.idleTickCount >= dynamicRefreshIdleThreshold {
                 self.currentIntervalMultiplier = min(
                     self.currentIntervalMultiplier * 2,
-                    Self.maxIntervalMultiplier)
+                    dynamicRefreshMaxIntervalMultiplier)
             }
         }
     }
