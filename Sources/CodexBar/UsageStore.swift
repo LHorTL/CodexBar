@@ -52,6 +52,7 @@ extension UsageStore {
             _ = self.settings.selectedMenuProvider
             _ = self.settings.debugLoadingPattern
             _ = self.settings.debugKeepCLISessionsAlive
+            _ = self.settings.claudeDynamicRefreshEnabled
             _ = self.settings.historicalTrackingEnabled
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
@@ -144,6 +145,11 @@ final class UsageStore {
     @ObservationIgnored var providerSpecs: [UsageProvider: ProviderSpec] = [:]
     @ObservationIgnored let providerMetadata: [UsageProvider: ProviderMetadata]
     @ObservationIgnored var providerRuntimes: [UsageProvider: any ProviderRuntime] = [:]
+    @ObservationIgnored private var claudeActivityMonitor: ClaudeActivityMonitor?
+    @ObservationIgnored private var idleTickCount: Int = 0
+    @ObservationIgnored private var currentIntervalMultiplier: Int = 1
+    private static let maxIntervalMultiplier = 8
+    private static let idleThreshold = 3
     @ObservationIgnored private var timerTask: Task<Void, Never>?
     @ObservationIgnored private var tokenTimerTask: Task<Void, Never>?
     @ObservationIgnored private var tokenRefreshSequenceTask: Task<Void, Never>?
@@ -456,13 +462,67 @@ final class UsageStore {
 
     private func startTimer() {
         self.timerTask?.cancel()
-        guard let wait = self.settings.refreshFrequency.seconds else { return }
+        guard let wait = self.settings.refreshFrequency.seconds else {
+            self.claudeActivityMonitor?.stop()
+            self.claudeActivityMonitor = nil
+            return
+        }
+
+        // Manage the Claude activity monitor lifecycle.
+        let dynamicRefreshEnabled = self.settings.claudeDynamicRefreshEnabled
+            && self.enabledProviders().contains(.claude)
+
+        if dynamicRefreshEnabled {
+            if self.claudeActivityMonitor == nil {
+                let monitor = ClaudeActivityMonitor()
+                let roots = ClaudeActivityMonitor.claudeProjectsRoots()
+                monitor.start(paths: roots.map(\.path))
+                self.claudeActivityMonitor = monitor
+            }
+        } else {
+            self.claudeActivityMonitor?.stop()
+            self.claudeActivityMonitor = nil
+            self.idleTickCount = 0
+            self.currentIntervalMultiplier = 1
+        }
 
         // Background poller so the menu stays responsive; canceled when settings change or store deallocates.
         self.timerTask = Task.detached(priority: .utility) { [weak self] in
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(wait))
-                await self?.refresh()
+                let multiplier = await self?.currentIntervalMultiplier ?? 1
+                let effectiveWait = wait * Double(max(1, multiplier))
+                try? await Task.sleep(for: .seconds(effectiveWait))
+
+                guard let self else { return }
+
+                // Check Claude activity and adjust idle state.
+                if dynamicRefreshEnabled, let monitor = await self.claudeActivityMonitor {
+                    let hadActivity = monitor.consumeActivity()
+                    await self.updateDynamicRefreshState(hadActivity: hadActivity)
+
+                    // If idle beyond threshold, skip this refresh cycle.
+                    let idle = await self.idleTickCount
+                    if idle >= Self.idleThreshold {
+                        continue
+                    }
+                }
+
+                await self.refresh()
+            }
+        }
+    }
+
+    @MainActor
+    private func updateDynamicRefreshState(hadActivity: Bool) {
+        if hadActivity {
+            self.idleTickCount = 0
+            self.currentIntervalMultiplier = 1
+        } else {
+            self.idleTickCount += 1
+            if self.idleTickCount >= Self.idleThreshold {
+                self.currentIntervalMultiplier = min(
+                    self.currentIntervalMultiplier * 2,
+                    Self.maxIntervalMultiplier)
             }
         }
     }
@@ -505,6 +565,7 @@ final class UsageStore {
         self.tokenTimerTask?.cancel()
         self.tokenRefreshSequenceTask?.cancel()
         self.codexPlanHistoryBackfillTask?.cancel()
+        self.claudeActivityMonitor?.stop()
     }
 
     enum SessionQuotaWindowSource: String {

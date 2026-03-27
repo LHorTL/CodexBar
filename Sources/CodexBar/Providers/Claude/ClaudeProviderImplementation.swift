@@ -26,6 +26,7 @@ struct ClaudeProviderImplementation: ProviderImplementation {
         _ = settings.claudeOAuthKeychainPromptMode
         _ = settings.claudeOAuthKeychainReadStrategy
         _ = settings.claudeWebExtrasEnabled
+        _ = settings.claudeDynamicRefreshEnabled
     }
 
     @MainActor
@@ -77,12 +78,27 @@ struct ClaudeProviderImplementation: ProviderImplementation {
                 context.settings.claudeOAuthPromptFreeCredentialsEnabled = enabled
             })
 
+        let dynamicRefreshBinding = Binding(
+            get: { context.settings.claudeDynamicRefreshEnabled },
+            set: { context.settings.claudeDynamicRefreshEnabled = $0 })
+
         return [
             ProviderSettingsToggleDescriptor(
                 id: "claude-oauth-prompt-free-credentials",
                 title: "Avoid Keychain prompts (experimental)",
                 subtitle: subtitle,
                 binding: promptFreeBinding,
+                statusText: nil,
+                actions: [],
+                isVisible: nil,
+                onChange: nil,
+                onAppDidBecomeActive: nil,
+                onAppearWhenEnabled: nil),
+            ProviderSettingsToggleDescriptor(
+                id: "claude-dynamic-refresh",
+                title: "Dynamic refresh",
+                subtitle: "Monitors local Claude chat files. Slows or pauses polling when no activity is detected.",
+                binding: dynamicRefreshBinding,
                 statusText: nil,
                 actions: [],
                 isVisible: nil,

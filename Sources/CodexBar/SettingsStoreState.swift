@@ -40,4 +40,5 @@ struct SettingsDefaultsState {
     var proxyPort: Int
     var proxyUsername: String
     var proxyPassword: String
+    var claudeDynamicRefreshEnabled: Bool
 }

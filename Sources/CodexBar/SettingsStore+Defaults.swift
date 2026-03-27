@@ -535,6 +535,14 @@ extension SettingsStore {
         }
     }
 
+    var claudeDynamicRefreshEnabled: Bool {
+        get { self.defaultsState.claudeDynamicRefreshEnabled }
+        set {
+            self.defaultsState.claudeDynamicRefreshEnabled = newValue
+            self.userDefaults.set(newValue, forKey: "claudeDynamicRefreshEnabled")
+        }
+    }
+
     func applyProxyConfiguration() {
         let config = ProxyConfiguration(
             enabled: self.proxyEnabled,

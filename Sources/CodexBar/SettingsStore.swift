@@ -237,6 +237,7 @@ extension SettingsStore {
         let proxyPort = userDefaults.object(forKey: "proxyPort") as? Int ?? 8080
         let proxyUsername = userDefaults.string(forKey: "proxyUsername") ?? ""
         let proxyPassword = userDefaults.string(forKey: "proxyPassword") ?? ""
+        let claudeDynamicRefreshEnabled = userDefaults.object(forKey: "claudeDynamicRefreshEnabled") as? Bool ?? false
 
         return SettingsDefaultsState(
             refreshFrequency: refreshFrequency,
@@ -277,7 +278,8 @@ extension SettingsStore {
             proxyHost: proxyHost,
             proxyPort: proxyPort,
             proxyUsername: proxyUsername,
-            proxyPassword: proxyPassword)
+            proxyPassword: proxyPassword,
+            claudeDynamicRefreshEnabled: claudeDynamicRefreshEnabled)
     }
 }
 
