@@ -87,7 +87,7 @@ struct MenuDescriptor {
                     sections.append(accountSection)
                 }
             } else {
-                sections.append(Section(entries: [.text("No usage configured.", .secondary)]))
+                sections.append(Section(entries: [.text(L10n.menuNoUsageConfigured, .secondary)]))
             }
         }
 
@@ -188,7 +188,7 @@ struct MenuDescriptor {
                 }
             }
         } else {
-            entries.append(.text("No usage yet", .secondary))
+            entries.append(.text(L10n.menuNoUsageYet, .secondary))
         }
 
         let usageContext = ProviderMenuUsageContext(
@@ -327,7 +327,7 @@ struct MenuDescriptor {
             } else {
                 let loginAction = self.switchAccountTarget(for: provider, store: store)
                 let hasAccount = self.hasAccount(for: provider, store: store, account: account)
-                let accountLabel = hasAccount ? "Switch Account..." : "Add Account..."
+                let accountLabel = hasAccount ? L10n.menuSwitchAccount : L10n.menuAddAccount
                 entries.append(.action(accountLabel, loginAction))
             }
         }
@@ -343,10 +343,10 @@ struct MenuDescriptor {
         }
 
         if metadata?.dashboardURL != nil {
-            entries.append(.action("Usage Dashboard", .dashboard))
+            entries.append(.action(L10n.menuUsageDashboard, .dashboard))
         }
         if metadata?.statusPageURL != nil || metadata?.statusLinkURL != nil {
-            entries.append(.action("Status Page", .statusPage))
+            entries.append(.action(L10n.menuStatusPage, .statusPage))
         }
 
         if let statusLine = self.statusLine(for: provider, store: store) {
@@ -359,12 +359,12 @@ struct MenuDescriptor {
     private static func metaSection(updateReady: Bool) -> Section {
         var entries: [Entry] = []
         if updateReady {
-            entries.append(.action("Update ready, restart now?", .installUpdate))
+            entries.append(.action(L10n.menuUpdateReady, .installUpdate))
         }
         entries.append(contentsOf: [
-            .action("Settings...", .settings),
-            .action("About CodexBar", .about),
-            .action("Quit", .quit),
+            .action(L10n.menuSettings, .settings),
+            .action(L10n.menuAbout, .about),
+            .action(L10n.menuQuit, .quit),
         ])
         return Section(entries: entries)
     }

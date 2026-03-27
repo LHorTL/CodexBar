@@ -1,0 +1,197 @@
+/* Tabs */
+"tab.general" = "General";
+"tab.providers" = "Providers";
+"tab.display" = "Display";
+"tab.advanced" = "Advanced";
+"tab.about" = "About";
+"tab.debug" = "Debug";
+
+/* Section Headers */
+"section.system" = "System";
+"section.usage" = "Usage";
+"section.automation" = "Automation";
+"section.menuBar" = "Menu bar";
+"section.menuContent" = "Menu content";
+"section.keyboardShortcut" = "Keyboard shortcut";
+"section.keychainAccess" = "Keychain access";
+"section.httpProxy" = "HTTP Proxy";
+"section.logging" = "Logging";
+"section.animations" = "Loading animations";
+"section.probeLogs" = "Probe logs";
+"section.fetchStrategy" = "Fetch strategy attempts";
+"section.openAICookies" = "OpenAI cookies";
+"section.caches" = "Caches";
+"section.notifications" = "Notifications";
+"section.cliSessions" = "CLI sessions";
+"section.errorSimulation" = "Error simulation";
+"section.cliPaths" = "CLI paths";
+
+/* General Pane */
+"general.language" = "Language";
+"general.language.subtitle" = "Choose the display language for CodexBar.";
+"general.startAtLogin" = "Start at Login";
+"general.startAtLogin.subtitle" = "Automatically opens CodexBar when you start your Mac.";
+"general.showCostSummary" = "Show cost summary";
+"general.showCostSummary.subtitle" = "Reads local usage logs. Shows today + last 30 days cost in the menu.";
+"general.autoRefreshHourly" = "Auto-refresh: hourly · Timeout: 10m";
+"general.refreshCadence" = "Refresh cadence";
+"general.refreshCadence.subtitle" = "How often CodexBar polls providers in the background.";
+"general.autoRefreshOff" = "Auto-refresh is off; use the menu's Refresh command.";
+"general.checkProviderStatus" = "Check provider status";
+"general.checkProviderStatus.subtitle" = "Polls OpenAI/Claude status pages and Google Workspace for Gemini/Antigravity, surfacing incidents in the icon and menu.";
+"general.sessionQuotaNotifications" = "Session quota notifications";
+"general.sessionQuotaNotifications.subtitle" = "Notifies when the 5-hour session quota hits 0% and when it becomes available again.";
+"general.quitCodexBar" = "Quit CodexBar";
+"general.cost.unsupported" = "unsupported";
+"general.cost.fetching" = "fetching…";
+"general.cost.lastAttempt" = "last attempt";
+"general.cost.noData" = "no data yet";
+
+/* Display Pane */
+"display.mergeIcons" = "Merge Icons";
+"display.mergeIcons.subtitle" = "Use a single menu bar icon with a provider switcher.";
+"display.switcherShowsIcons" = "Switcher shows icons";
+"display.switcherShowsIcons.subtitle" = "Show provider icons in the switcher (otherwise show a weekly progress line).";
+"display.showMostUsedProvider" = "Show most-used provider";
+"display.showMostUsedProvider.subtitle" = "Menu bar auto-shows the provider closest to its rate limit.";
+"display.menuBarShowsPercent" = "Menu bar shows percent";
+"display.menuBarShowsPercent.subtitle" = "Replace critter bars with provider branding icons and a percentage.";
+"display.displayMode" = "Display mode";
+"display.displayMode.subtitle" = "Choose what to show in the menu bar (Pace shows usage vs. expected).";
+"display.showUsageAsUsed" = "Show usage as used";
+"display.showUsageAsUsed.subtitle" = "Progress bars fill as you consume quota (instead of showing remaining).";
+"display.showResetTimeAsClock" = "Show reset time as clock";
+"display.showResetTimeAsClock.subtitle" = "Display reset times as absolute clock values instead of countdowns.";
+"display.showCreditsExtraUsage" = "Show credits + extra usage";
+"display.showCreditsExtraUsage.subtitle" = "Show Codex Credits and Claude Extra usage sections in the menu.";
+"display.showAllTokenAccounts" = "Show all token accounts";
+"display.showAllTokenAccounts.subtitle" = "Stack token accounts in the menu (otherwise show an account switcher bar).";
+"display.overviewTabProviders" = "Overview tab providers";
+"display.overviewConfigure" = "Configure…";
+"display.overviewEnableMerge" = "Enable Merge Icons to configure Overview tab providers.";
+"display.overviewNoProviders" = "No enabled providers available for Overview.";
+"display.overviewNoSelected" = "No providers selected";
+"display.overviewFollowOrder" = "Overview rows always follow provider order.";
+"display.overviewChooseUpTo" = "Choose up to %d providers";
+
+/* Advanced Pane */
+"advanced.openMenu" = "Open menu";
+"advanced.openMenu.subtitle" = "Trigger the menu bar menu from anywhere.";
+"advanced.installCLI" = "Install CLI";
+"advanced.installCLI.subtitle" = "Symlink CodexBarCLI to /usr/local/bin and /opt/homebrew/bin as codexbar.";
+"advanced.showDebugSettings" = "Show Debug Settings";
+"advanced.showDebugSettings.subtitle" = "Expose troubleshooting tools in the Debug tab.";
+"advanced.surpriseMe" = "Surprise me";
+"advanced.surpriseMe.subtitle" = "Check if you like your agents having some fun up there.";
+"advanced.hidePersonalInfo" = "Hide personal information";
+"advanced.hidePersonalInfo.subtitle" = "Obscure email addresses in the menu bar and menu UI.";
+"advanced.keychainAccess.caption" = "Disable all Keychain reads and writes. Browser cookie import is unavailable; paste Cookie headers manually in Providers.";
+"advanced.disableKeychainAccess" = "Disable Keychain access";
+"advanced.disableKeychainAccess.subtitle" = "Prevents any Keychain access while enabled.";
+"advanced.httpProxy.caption" = "Route all API requests through a proxy server.";
+"advanced.enableProxy" = "Enable proxy";
+"advanced.enableProxy.subtitle" = "When disabled, direct connections are used.";
+"advanced.proxy.host" = "Host";
+"advanced.proxy.port" = "Port";
+"advanced.proxy.username" = "Username (optional)";
+"advanced.proxy.password" = "Password (optional)";
+"advanced.cli.notFound" = "CodexBarCLI not found in app bundle.";
+"advanced.cli.noWriteAccess" = "No write access: %@";
+"advanced.cli.installed" = "Installed: %@";
+"advanced.cli.exists" = "Exists: %@";
+"advanced.cli.failed" = "Failed: %@";
+"advanced.cli.noBinDirs" = "No writable bin dirs found.";
+
+/* About Pane */
+"about.tagline" = "May your tokens never run out—keep agent limits in view.";
+"about.github" = "GitHub";
+"about.website" = "Website";
+"about.twitter" = "Twitter";
+"about.email" = "Email";
+"about.autoUpdate" = "Check for updates automatically";
+"about.updateChannel" = "Update Channel";
+"about.checkForUpdates" = "Check for Updates…";
+"about.updatesUnavailable" = "Updates unavailable in this build.";
+
+/* Debug Pane */
+"debug.enableFileLogging" = "Enable file logging";
+"debug.verbosity" = "Verbosity";
+"debug.verbosity.subtitle" = "Controls how much detail is logged.";
+"debug.openLogFile" = "Open log file";
+"debug.animationPattern" = "Animation pattern";
+"debug.randomDefault" = "Random (default)";
+"debug.replayAnimation" = "Replay selected animation";
+"debug.blinkNow" = "Blink now";
+"debug.probeLogs.subtitle" = "Fetch the latest probe output for debugging; Copy keeps the full text.";
+"debug.fetchLog" = "Fetch log";
+"debug.copy" = "Copy";
+"debug.saveToFile" = "Save to file";
+"debug.loadParseDump" = "Load parse dump";
+"debug.rerunAutodetect" = "Re-run provider autodetect";
+"debug.loading" = "Loading…";
+"debug.noLogYet" = "No log yet. Fetch to load.";
+"debug.fetchStrategy.subtitle" = "Last fetch pipeline decisions and errors for a provider.";
+"debug.openAICookies.subtitle" = "Cookie import + WebKit scrape logs from the last OpenAI cookies attempt.";
+"debug.openAICookies.noLog" = "No log yet. Update OpenAI cookies in Providers → Codex to run an import.";
+"debug.clearCostCache" = "Clear cost cache";
+"debug.clearCostCache.subtitle" = "Clear cached cost scan results.";
+"debug.cleared" = "Cleared.";
+"debug.notifications.subtitle" = "Trigger test notifications for the 5-hour session window (depleted/restored).";
+"debug.postDepleted" = "Post depleted";
+"debug.postRestored" = "Post restored";
+"debug.keepCLISessionsAlive" = "Keep CLI sessions alive";
+"debug.keepCLISessionsAlive.subtitle" = "Skip teardown between probes (debug-only).";
+"debug.resetCLISessions" = "Reset CLI sessions";
+"debug.errorSimulation.subtitle" = "Inject a fake error message into the menu card for layout testing.";
+"debug.setMenuError" = "Set menu error";
+"debug.clearMenuError" = "Clear menu error";
+"debug.setCostError" = "Set cost error";
+"debug.clearCostError" = "Clear cost error";
+"debug.cliPaths.subtitle" = "Resolved Codex binary and PATH layers; startup login PATH capture (short timeout).";
+"debug.effectivePATH" = "Effective PATH";
+"debug.unavailable" = "Unavailable";
+"debug.loginShellPATH" = "Login shell PATH (startup capture)";
+"debug.notFound" = "Not found";
+
+/* Enum Labels */
+"refresh.manual" = "Manual";
+"refresh.oneMinute" = "1 min";
+"refresh.twoMinutes" = "2 min";
+"refresh.fiveMinutes" = "5 min";
+"refresh.fifteenMinutes" = "15 min";
+"refresh.thirtyMinutes" = "30 min";
+"metric.automatic" = "Automatic";
+"metric.primary" = "Primary";
+"metric.secondary" = "Secondary";
+"metric.tertiary" = "Tertiary";
+"metric.average" = "Average";
+"displayMode.percent" = "Percent";
+"displayMode.pace" = "Pace";
+"displayMode.both" = "Both";
+
+/* Menu */
+"menu.settings" = "Settings…";
+"menu.about" = "About CodexBar";
+"menu.quit" = "Quit";
+"menu.refresh" = "Refresh";
+"menu.usageDashboard" = "Usage Dashboard";
+"menu.statusPage" = "Status Page";
+"menu.updateReady" = "Update ready, restart now?";
+"menu.noUsageConfigured" = "No usage configured.";
+"menu.noUsageYet" = "No usage yet";
+"menu.switchAccount" = "Switch Account…";
+"menu.addAccount" = "Add Account…";
+
+/* Menu Card */
+"card.cost" = "Cost";
+"card.credits" = "Credits";
+"card.copied" = "Copied";
+"card.copyError" = "Copy error";
+"card.noUsageYet" = "No usage yet";
+"card.apiKeyLimit" = "API key limit";
+
+/* Notifications */
+"notification.sessionDepleted" = "%@ session depleted";
+"notification.sessionDepleted.body" = "0%% left. Will notify when it's available again.";
+"notification.sessionRestored" = "%@ session restored";
+"notification.sessionRestored.body" = "Session quota is available again.";

@@ -11,20 +11,38 @@ struct GeneralPane: View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack(alignment: .leading, spacing: 16) {
                 SettingsSection(contentSpacing: 12) {
-                    Text("System")
+                    Text(L10n.sectionSystem)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .textCase(.uppercase)
+                    HStack(alignment: .top, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(L10n.language)
+                                .font(.body)
+                            Text(L10n.languageSubtitle)
+                                .font(.footnote)
+                                .foregroundStyle(.tertiary)
+                        }
+                        Spacer()
+                        Picker(L10n.language, selection: self.$settings.appLanguage) {
+                            ForEach(AppLanguage.allCases) { lang in
+                                Text(lang.displayName).tag(lang)
+                            }
+                        }
+                        .labelsHidden()
+                        .pickerStyle(.menu)
+                        .frame(maxWidth: 200)
+                    }
                     PreferenceToggleRow(
-                        title: "Start at Login",
-                        subtitle: "Automatically opens CodexBar when you start your Mac.",
+                        title: L10n.startAtLogin,
+                        subtitle: L10n.startAtLoginSubtitle,
                         binding: self.$settings.launchAtLogin)
                 }
 
                 Divider()
 
                 SettingsSection(contentSpacing: 12) {
-                    Text("Usage")
+                    Text(L10n.sectionUsage)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .textCase(.uppercase)
@@ -32,18 +50,18 @@ struct GeneralPane: View {
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 4) {
                             Toggle(isOn: self.$settings.costUsageEnabled) {
-                                Text("Show cost summary")
+                                Text(L10n.showCostSummary)
                                     .font(.body)
                             }
                             .toggleStyle(.checkbox)
 
-                            Text("Reads local usage logs. Shows today + last 30 days cost in the menu.")
+                            Text(L10n.showCostSummarySubtitle)
                                 .font(.footnote)
                                 .foregroundStyle(.tertiary)
                                 .fixedSize(horizontal: false, vertical: true)
 
                             if self.settings.costUsageEnabled {
-                                Text("Auto-refresh: hourly · Timeout: 10m")
+                                Text(L10n.autoRefreshHourly)
                                     .font(.footnote)
                                     .foregroundStyle(.tertiary)
 
@@ -57,21 +75,21 @@ struct GeneralPane: View {
                 Divider()
 
                 SettingsSection(contentSpacing: 12) {
-                    Text("Automation")
+                    Text(L10n.sectionAutomation)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .textCase(.uppercase)
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(alignment: .top, spacing: 12) {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Refresh cadence")
+                                Text(L10n.refreshCadence)
                                     .font(.body)
-                                Text("How often CodexBar polls providers in the background.")
+                                Text(L10n.refreshCadenceSubtitle)
                                     .font(.footnote)
                                     .foregroundStyle(.tertiary)
                             }
                             Spacer()
-                            Picker("Refresh cadence", selection: self.$settings.refreshFrequency) {
+                            Picker(L10n.refreshCadence, selection: self.$settings.refreshFrequency) {
                                 ForEach(RefreshFrequency.allCases) { option in
                                     Text(option.label).tag(option)
                                 }
@@ -81,20 +99,18 @@ struct GeneralPane: View {
                             .frame(maxWidth: 200)
                         }
                         if self.settings.refreshFrequency == .manual {
-                            Text("Auto-refresh is off; use the menu's Refresh command.")
+                            Text(L10n.autoRefreshOff)
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
                         }
                     }
                     PreferenceToggleRow(
-                        title: "Check provider status",
-                        subtitle: "Polls OpenAI/Claude status pages and Google Workspace for " +
-                            "Gemini/Antigravity, surfacing incidents in the icon and menu.",
+                        title: L10n.checkProviderStatus,
+                        subtitle: L10n.checkProviderStatusSubtitle,
                         binding: self.$settings.statusChecksEnabled)
                     PreferenceToggleRow(
-                        title: "Session quota notifications",
-                        subtitle: "Notifies when the 5-hour session quota hits 0% and when it becomes " +
-                            "available again.",
+                        title: L10n.sessionQuotaNotifications,
+                        subtitle: L10n.sessionQuotaNotificationsSubtitle,
                         binding: self.$settings.sessionQuotaNotificationsEnabled)
                 }
 
@@ -103,7 +119,7 @@ struct GeneralPane: View {
                 SettingsSection(contentSpacing: 12) {
                     HStack {
                         Spacer()
-                        Button("Quit CodexBar") { NSApp.terminate(nil) }
+                        Button(L10n.quitCodexBar) { NSApp.terminate(nil) }
                             .buttonStyle(.borderedProminent)
                             .controlSize(.large)
                     }
@@ -119,7 +135,7 @@ struct GeneralPane: View {
         let name = ProviderDescriptorRegistry.descriptor(for: provider).metadata.displayName
 
         guard provider == .claude || provider == .codex else {
-            return Text("\(name): unsupported")
+            return Text("\(name): \(L10n.costUnsupported)")
                 .font(.footnote)
                 .foregroundStyle(.tertiary)
         }
@@ -133,7 +149,7 @@ struct GeneralPane: View {
                 formatter.unitsStyle = .abbreviated
                 return formatter.string(from: seconds).map { " (\($0))" } ?? ""
             }()
-            return Text("\(name): fetching…\(elapsed)")
+            return Text("\(name): \(L10n.costFetching)\(elapsed)")
                 .font(.footnote)
                 .foregroundStyle(.tertiary)
         }
@@ -154,11 +170,11 @@ struct GeneralPane: View {
             let rel = RelativeDateTimeFormatter()
             rel.unitsStyle = .abbreviated
             let when = rel.localizedString(for: lastAttempt, relativeTo: Date())
-            return Text("\(name): last attempt \(when)")
+            return Text("\(name): \(L10n.costLastAttempt) \(when)")
                 .font(.footnote)
                 .foregroundStyle(.tertiary)
         }
-        return Text("\(name): no data yet")
+        return Text("\(name): \(L10n.costNoData)")
             .font(.footnote)
             .foregroundStyle(.tertiary)
     }

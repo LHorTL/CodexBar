@@ -58,7 +58,7 @@ struct AboutPane: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
-                Text("May your tokens never run out—keep agent limits in view.")
+                Text(L10n.aboutTagline)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -66,11 +66,11 @@ struct AboutPane: View {
             VStack(alignment: .center, spacing: 10) {
                 AboutLinkRow(
                     icon: "chevron.left.slash.chevron.right",
-                    title: "GitHub",
+                    title: L10n.aboutGitHub,
                     url: "https://github.com/steipete/CodexBar")
-                AboutLinkRow(icon: "globe", title: "Website", url: "https://steipete.me")
-                AboutLinkRow(icon: "bird", title: "Twitter", url: "https://twitter.com/steipete")
-                AboutLinkRow(icon: "envelope", title: "Email", url: "mailto:peter@steipete.me")
+                AboutLinkRow(icon: "globe", title: L10n.aboutWebsite, url: "https://steipete.me")
+                AboutLinkRow(icon: "bird", title: L10n.aboutTwitter, url: "https://twitter.com/steipete")
+                AboutLinkRow(icon: "envelope", title: L10n.aboutEmail, url: "mailto:peter@steipete.me")
             }
             .padding(.top, 8)
             .frame(maxWidth: .infinity)
@@ -80,12 +80,12 @@ struct AboutPane: View {
 
             if self.updater.isAvailable {
                 VStack(spacing: 10) {
-                    Toggle("Check for updates automatically", isOn: self.$autoUpdateEnabled)
+                    Toggle(L10n.aboutAutoUpdate, isOn: self.$autoUpdateEnabled)
                         .toggleStyle(.checkbox)
                         .frame(maxWidth: .infinity, alignment: .center)
                     VStack(spacing: 6) {
                         HStack(spacing: 12) {
-                            Text("Update Channel")
+                            Text(L10n.aboutUpdateChannel)
                             Spacer()
                             Picker("", selection: self.updateChannelBinding) {
                                 ForEach(UpdateChannel.allCases) { channel in
@@ -102,10 +102,10 @@ struct AboutPane: View {
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: 280)
                     }
-                    Button("Check for Updates…") { self.updater.checkForUpdates(nil) }
+                    Button(L10n.aboutCheckForUpdates) { self.updater.checkForUpdates(nil) }
                 }
             } else {
-                Text(self.updater.unavailableReason ?? "Updates unavailable in this build.")
+                Text(self.updater.unavailableReason ?? L10n.aboutUpdatesUnavailable)
                     .foregroundStyle(.secondary)
             }
 

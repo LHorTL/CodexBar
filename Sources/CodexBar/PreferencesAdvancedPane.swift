@@ -12,17 +12,17 @@ struct AdvancedPane: View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack(alignment: .leading, spacing: 16) {
                 SettingsSection(contentSpacing: 8) {
-                    Text("Keyboard shortcut")
+                    Text(L10n.sectionKeyboardShortcut)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .textCase(.uppercase)
                     HStack(alignment: .center, spacing: 12) {
-                        Text("Open menu")
+                        Text(L10n.openMenu)
                             .font(.body)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .openMenu)
                     }
-                    Text("Trigger the menu bar menu from anywhere.")
+                    Text(L10n.openMenuSubtitle)
                         .font(.footnote)
                         .foregroundStyle(.tertiary)
                 }
@@ -37,7 +37,7 @@ struct AdvancedPane: View {
                             if self.isInstallingCLI {
                                 ProgressView().controlSize(.small)
                             } else {
-                                Text("Install CLI")
+                                Text(L10n.installCLI)
                             }
                         }
                         .disabled(self.isInstallingCLI)
@@ -49,7 +49,7 @@ struct AdvancedPane: View {
                                 .lineLimit(2)
                         }
                     }
-                    Text("Symlink CodexBarCLI to /usr/local/bin and /opt/homebrew/bin as codexbar.")
+                    Text(L10n.installCLISubtitle)
                         .font(.footnote)
                         .foregroundStyle(.tertiary)
                 }
@@ -58,12 +58,12 @@ struct AdvancedPane: View {
 
                 SettingsSection(contentSpacing: 10) {
                     PreferenceToggleRow(
-                        title: "Show Debug Settings",
-                        subtitle: "Expose troubleshooting tools in the Debug tab.",
+                        title: L10n.showDebugSettings,
+                        subtitle: L10n.showDebugSettingsSubtitle,
                         binding: self.$settings.debugMenuEnabled)
                     PreferenceToggleRow(
-                        title: "Surprise me",
-                        subtitle: "Check if you like your agents having some fun up there.",
+                        title: L10n.surpriseMe,
+                        subtitle: L10n.surpriseMeSubtitle,
                         binding: self.$settings.randomBlinkEnabled)
                 }
 
@@ -71,34 +71,31 @@ struct AdvancedPane: View {
 
                 SettingsSection(contentSpacing: 10) {
                     PreferenceToggleRow(
-                        title: "Hide personal information",
-                        subtitle: "Obscure email addresses in the menu bar and menu UI.",
+                        title: L10n.hidePersonalInfo,
+                        subtitle: L10n.hidePersonalInfoSubtitle,
                         binding: self.$settings.hidePersonalInfo)
                 }
 
                 Divider()
 
                 SettingsSection(
-                    title: "Keychain access",
-                    caption: """
-                    Disable all Keychain reads and writes. Browser cookie import is unavailable; paste Cookie \
-                    headers manually in Providers.
-                    """) {
+                    title: L10n.sectionKeychainAccess,
+                    caption: L10n.keychainAccessCaption) {
                         PreferenceToggleRow(
-                            title: "Disable Keychain access",
-                            subtitle: "Prevents any Keychain access while enabled.",
+                            title: L10n.disableKeychainAccess,
+                            subtitle: L10n.disableKeychainAccessSubtitle,
                             binding: self.$settings.debugDisableKeychainAccess)
                     }
 
                 Divider()
 
                 SettingsSection(
-                    title: "HTTP Proxy",
-                    caption: "Route all API requests through a proxy server.")
+                    title: L10n.sectionHTTPProxy,
+                    caption: L10n.httpProxyCaption)
                 {
                     PreferenceToggleRow(
-                        title: "Enable proxy",
-                        subtitle: "When disabled, direct connections are used.",
+                        title: L10n.enableProxy,
+                        subtitle: L10n.enableProxySubtitle,
                         binding: self.$settings.proxyEnabled)
 
                     if self.settings.proxyEnabled {
@@ -110,19 +107,19 @@ struct AdvancedPane: View {
                         .pickerStyle(.segmented)
 
                         HStack(spacing: 8) {
-                            TextField("Host", text: self.$settings.proxyHost)
+                            TextField(L10n.proxyHost, text: self.$settings.proxyHost)
                                 .textFieldStyle(.roundedBorder)
                             TextField(
-                                "Port",
+                                L10n.proxyPort,
                                 value: self.$settings.proxyPort,
                                 format: .number.grouping(.never))
                                 .textFieldStyle(.roundedBorder)
                                 .frame(width: 80)
                         }
 
-                        TextField("Username (optional)", text: self.$settings.proxyUsername)
+                        TextField(L10n.proxyUsername, text: self.$settings.proxyUsername)
                             .textFieldStyle(.roundedBorder)
-                        SecureField("Password (optional)", text: self.$settings.proxyPassword)
+                        SecureField(L10n.proxyPassword, text: self.$settings.proxyPassword)
                             .textFieldStyle(.roundedBorder)
                     }
                 }
@@ -143,7 +140,7 @@ extension AdvancedPane {
         let helperURL = Bundle.main.bundleURL.appendingPathComponent("Contents/Helpers/CodexBarCLI")
         let fm = FileManager.default
         guard fm.fileExists(atPath: helperURL.path) else {
-            self.cliStatus = "CodexBarCLI not found in app bundle."
+            self.cliStatus = L10n.cliNotFound
             return
         }
 
@@ -179,7 +176,7 @@ extension AdvancedPane {
         }
 
         self.cliStatus = results.isEmpty
-            ? "No writable bin dirs found."
+            ? L10n.cliNoBinDirs
             : results.joined(separator: " · ")
     }
 

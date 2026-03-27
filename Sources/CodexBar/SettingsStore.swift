@@ -28,12 +28,12 @@ enum RefreshFrequency: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .manual: "Manual"
-        case .oneMinute: "1 min"
-        case .twoMinutes: "2 min"
-        case .fiveMinutes: "5 min"
-        case .fifteenMinutes: "15 min"
-        case .thirtyMinutes: "30 min"
+        case .manual: L10n.refreshManual
+        case .oneMinute: L10n.refreshOneMin
+        case .twoMinutes: L10n.refreshTwoMin
+        case .fiveMinutes: L10n.refreshFiveMin
+        case .fifteenMinutes: L10n.refreshFifteenMin
+        case .thirtyMinutes: L10n.refreshThirtyMin
         }
     }
 }
@@ -51,11 +51,11 @@ enum MenuBarMetricPreference: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .automatic: "Automatic"
-        case .primary: "Primary"
-        case .secondary: "Secondary"
-        case .tertiary: "Tertiary"
-        case .average: "Average"
+        case .automatic: L10n.metricAutomatic
+        case .primary: L10n.metricPrimary
+        case .secondary: L10n.metricSecondary
+        case .tertiary: L10n.metricTertiary
+        case .average: L10n.metricAverage
         }
     }
 }
@@ -238,6 +238,7 @@ extension SettingsStore {
         let proxyUsername = userDefaults.string(forKey: "proxyUsername") ?? ""
         let proxyPassword = userDefaults.string(forKey: "proxyPassword") ?? ""
         let claudeDynamicRefreshEnabled = userDefaults.object(forKey: "claudeDynamicRefreshEnabled") as? Bool ?? false
+        let appLanguageRaw = userDefaults.string(forKey: "appLanguage") ?? "en"
 
         return SettingsDefaultsState(
             refreshFrequency: refreshFrequency,
@@ -279,7 +280,8 @@ extension SettingsStore {
             proxyPort: proxyPort,
             proxyUsername: proxyUsername,
             proxyPassword: proxyPassword,
-            claudeDynamicRefreshEnabled: claudeDynamicRefreshEnabled)
+            claudeDynamicRefreshEnabled: claudeDynamicRefreshEnabled,
+            appLanguageRaw: appLanguageRaw)
     }
 }
 

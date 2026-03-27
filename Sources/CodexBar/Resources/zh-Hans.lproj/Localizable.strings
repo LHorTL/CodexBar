@@ -1,0 +1,197 @@
+/* Tabs */
+"tab.general" = "通用";
+"tab.providers" = "服务商";
+"tab.display" = "显示";
+"tab.advanced" = "高级";
+"tab.about" = "关于";
+"tab.debug" = "调试";
+
+/* Section Headers */
+"section.system" = "系统";
+"section.usage" = "用量";
+"section.automation" = "自动化";
+"section.menuBar" = "菜单栏";
+"section.menuContent" = "菜单内容";
+"section.keyboardShortcut" = "键盘快捷键";
+"section.keychainAccess" = "钥匙串访问";
+"section.httpProxy" = "HTTP 代理";
+"section.logging" = "日志";
+"section.animations" = "加载动画";
+"section.probeLogs" = "探测日志";
+"section.fetchStrategy" = "获取策略记录";
+"section.openAICookies" = "OpenAI Cookies";
+"section.caches" = "缓存";
+"section.notifications" = "通知";
+"section.cliSessions" = "CLI 会话";
+"section.errorSimulation" = "错误模拟";
+"section.cliPaths" = "CLI 路径";
+
+/* General Pane */
+"general.language" = "语言";
+"general.language.subtitle" = "选择 CodexBar 的界面显示语言。";
+"general.startAtLogin" = "登录时启动";
+"general.startAtLogin.subtitle" = "Mac 启动时自动打开 CodexBar。";
+"general.showCostSummary" = "显示费用摘要";
+"general.showCostSummary.subtitle" = "读取本地用量日志，在菜单中显示今日及最近 30 天的费用。";
+"general.autoRefreshHourly" = "自动刷新：每小时 · 超时：10分钟";
+"general.refreshCadence" = "刷新频率";
+"general.refreshCadence.subtitle" = "CodexBar 在后台轮询服务商的频率。";
+"general.autoRefreshOff" = "自动刷新已关闭，请使用菜单中的刷新命令。";
+"general.checkProviderStatus" = "检查服务商状态";
+"general.checkProviderStatus.subtitle" = "轮询 OpenAI/Claude 状态页面和 Google Workspace（Gemini/Antigravity），在图标和菜单中显示事件。";
+"general.sessionQuotaNotifications" = "会话配额通知";
+"general.sessionQuotaNotifications.subtitle" = "当 5 小时会话配额降至 0% 以及恢复可用时发送通知。";
+"general.quitCodexBar" = "退出 CodexBar";
+"general.cost.unsupported" = "不支持";
+"general.cost.fetching" = "获取中…";
+"general.cost.lastAttempt" = "上次尝试";
+"general.cost.noData" = "暂无数据";
+
+/* Display Pane */
+"display.mergeIcons" = "合并图标";
+"display.mergeIcons.subtitle" = "使用单个菜单栏图标，配合服务商切换器。";
+"display.switcherShowsIcons" = "切换器显示图标";
+"display.switcherShowsIcons.subtitle" = "在切换器中显示服务商图标（否则显示每周进度线）。";
+"display.showMostUsedProvider" = "显示最常用的服务商";
+"display.showMostUsedProvider.subtitle" = "菜单栏自动显示最接近速率限制的服务商。";
+"display.menuBarShowsPercent" = "菜单栏显示百分比";
+"display.menuBarShowsPercent.subtitle" = "用服务商品牌图标和百分比替换动画条。";
+"display.displayMode" = "显示模式";
+"display.displayMode.subtitle" = "选择菜单栏显示内容（Pace 显示用量与预期的对比）。";
+"display.showUsageAsUsed" = "显示已用量";
+"display.showUsageAsUsed.subtitle" = "进度条随消耗填充（而非显示剩余量）。";
+"display.showResetTimeAsClock" = "以时钟显示重置时间";
+"display.showResetTimeAsClock.subtitle" = "以绝对时钟值显示重置时间，而非倒计时。";
+"display.showCreditsExtraUsage" = "显示额度和额外用量";
+"display.showCreditsExtraUsage.subtitle" = "在菜单中显示 Codex Credits 和 Claude 额外用量部分。";
+"display.showAllTokenAccounts" = "显示所有令牌账户";
+"display.showAllTokenAccounts.subtitle" = "在菜单中堆叠令牌账户（否则显示账户切换栏）。";
+"display.overviewTabProviders" = "概览标签页服务商";
+"display.overviewConfigure" = "配置…";
+"display.overviewEnableMerge" = "启用合并图标以配置概览标签页的服务商。";
+"display.overviewNoProviders" = "没有可用于概览的已启用服务商。";
+"display.overviewNoSelected" = "未选择服务商";
+"display.overviewFollowOrder" = "概览行始终遵循服务商顺序。";
+"display.overviewChooseUpTo" = "最多选择 %d 个服务商";
+
+/* Advanced Pane */
+"advanced.openMenu" = "打开菜单";
+"advanced.openMenu.subtitle" = "从任意位置触发菜单栏菜单。";
+"advanced.installCLI" = "安装 CLI";
+"advanced.installCLI.subtitle" = "将 CodexBarCLI 符号链接到 /usr/local/bin 和 /opt/homebrew/bin（名称为 codexbar）。";
+"advanced.showDebugSettings" = "显示调试设置";
+"advanced.showDebugSettings.subtitle" = "在调试标签页中显示排障工具。";
+"advanced.surpriseMe" = "给我惊喜";
+"advanced.surpriseMe.subtitle" = "看看你是否喜欢你的 Agent 在上面玩得开心。";
+"advanced.hidePersonalInfo" = "隐藏个人信息";
+"advanced.hidePersonalInfo.subtitle" = "在菜单栏和菜单 UI 中隐藏电子邮件地址。";
+"advanced.keychainAccess.caption" = "禁用所有钥匙串读写。浏览器 Cookie 导入不可用；请在服务商设置中手动粘贴 Cookie 头。";
+"advanced.disableKeychainAccess" = "禁用钥匙串访问";
+"advanced.disableKeychainAccess.subtitle" = "启用后阻止所有钥匙串访问。";
+"advanced.httpProxy.caption" = "通过代理服务器路由所有 API 请求。";
+"advanced.enableProxy" = "启用代理";
+"advanced.enableProxy.subtitle" = "禁用时使用直接连接。";
+"advanced.proxy.host" = "主机";
+"advanced.proxy.port" = "端口";
+"advanced.proxy.username" = "用户名（可选）";
+"advanced.proxy.password" = "密码（可选）";
+"advanced.cli.notFound" = "应用包中未找到 CodexBarCLI。";
+"advanced.cli.noWriteAccess" = "无写入权限：%@";
+"advanced.cli.installed" = "已安装：%@";
+"advanced.cli.exists" = "已存在：%@";
+"advanced.cli.failed" = "失败：%@";
+"advanced.cli.noBinDirs" = "未找到可写入的 bin 目录。";
+
+/* About Pane */
+"about.tagline" = "愿你的 Token 永不耗尽——随时掌握 Agent 限额。";
+"about.github" = "GitHub";
+"about.website" = "网站";
+"about.twitter" = "Twitter";
+"about.email" = "邮箱";
+"about.autoUpdate" = "自动检查更新";
+"about.updateChannel" = "更新通道";
+"about.checkForUpdates" = "检查更新…";
+"about.updatesUnavailable" = "此版本不支持更新。";
+
+/* Debug Pane */
+"debug.enableFileLogging" = "启用文件日志";
+"debug.verbosity" = "详细程度";
+"debug.verbosity.subtitle" = "控制日志记录的详细程度。";
+"debug.openLogFile" = "打开日志文件";
+"debug.animationPattern" = "动画模式";
+"debug.randomDefault" = "随机（默认）";
+"debug.replayAnimation" = "重播选中的动画";
+"debug.blinkNow" = "立即闪烁";
+"debug.probeLogs.subtitle" = "获取最新的探测输出用于调试；复制保留完整文本。";
+"debug.fetchLog" = "获取日志";
+"debug.copy" = "复制";
+"debug.saveToFile" = "保存到文件";
+"debug.loadParseDump" = "加载解析转储";
+"debug.rerunAutodetect" = "重新运行服务商自动检测";
+"debug.loading" = "加载中…";
+"debug.noLogYet" = "暂无日志。点击获取以加载。";
+"debug.fetchStrategy.subtitle" = "服务商的最后一次获取管道决策和错误。";
+"debug.openAICookies.subtitle" = "上次 OpenAI Cookies 尝试的 Cookie 导入和 WebKit 抓取日志。";
+"debug.openAICookies.noLog" = "暂无日志。在服务商 → Codex 中更新 OpenAI Cookies 以执行导入。";
+"debug.clearCostCache" = "清除费用缓存";
+"debug.clearCostCache.subtitle" = "清除已缓存的费用扫描结果。";
+"debug.cleared" = "已清除。";
+"debug.notifications.subtitle" = "触发 5 小时会话窗口的测试通知（耗尽/恢复）。";
+"debug.postDepleted" = "发送耗尽通知";
+"debug.postRestored" = "发送恢复通知";
+"debug.keepCLISessionsAlive" = "保持 CLI 会话活跃";
+"debug.keepCLISessionsAlive.subtitle" = "在探测之间跳过清理（仅调试用）。";
+"debug.resetCLISessions" = "重置 CLI 会话";
+"debug.errorSimulation.subtitle" = "向菜单卡片注入虚假错误消息以测试布局。";
+"debug.setMenuError" = "设置菜单错误";
+"debug.clearMenuError" = "清除菜单错误";
+"debug.setCostError" = "设置费用错误";
+"debug.clearCostError" = "清除费用错误";
+"debug.cliPaths.subtitle" = "已解析的 Codex 二进制文件和 PATH 层级；启动时 login PATH 捕获（短超时）。";
+"debug.effectivePATH" = "有效 PATH";
+"debug.unavailable" = "不可用";
+"debug.loginShellPATH" = "Login Shell PATH（启动捕获）";
+"debug.notFound" = "未找到";
+
+/* Enum Labels */
+"refresh.manual" = "手动";
+"refresh.oneMinute" = "1 分钟";
+"refresh.twoMinutes" = "2 分钟";
+"refresh.fiveMinutes" = "5 分钟";
+"refresh.fifteenMinutes" = "15 分钟";
+"refresh.thirtyMinutes" = "30 分钟";
+"metric.automatic" = "自动";
+"metric.primary" = "主要";
+"metric.secondary" = "次要";
+"metric.tertiary" = "第三";
+"metric.average" = "平均";
+"displayMode.percent" = "百分比";
+"displayMode.pace" = "进度";
+"displayMode.both" = "两者";
+
+/* Menu */
+"menu.settings" = "设置…";
+"menu.about" = "关于 CodexBar";
+"menu.quit" = "退出";
+"menu.refresh" = "刷新";
+"menu.usageDashboard" = "用量面板";
+"menu.statusPage" = "状态页面";
+"menu.updateReady" = "更新就绪，立即重启？";
+"menu.noUsageConfigured" = "未配置用量。";
+"menu.noUsageYet" = "暂无用量";
+"menu.switchAccount" = "切换账户…";
+"menu.addAccount" = "添加账户…";
+
+/* Menu Card */
+"card.cost" = "费用";
+"card.credits" = "额度";
+"card.copied" = "已复制";
+"card.copyError" = "复制错误";
+"card.noUsageYet" = "暂无用量";
+"card.apiKeyLimit" = "API Key 限额";
+
+/* Notifications */
+"notification.sessionDepleted" = "%@ 会话已耗尽";
+"notification.sessionDepleted.body" = "剩余 0%%。恢复可用时将通知您。";
+"notification.sessionRestored" = "%@ 会话已恢复";
+"notification.sessionRestored.body" = "会话配额已恢复可用。";

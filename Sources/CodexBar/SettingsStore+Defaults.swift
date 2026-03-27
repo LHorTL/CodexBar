@@ -543,6 +543,15 @@ extension SettingsStore {
         }
     }
 
+    var appLanguage: AppLanguage {
+        get { AppLanguage(rawValue: self.defaultsState.appLanguageRaw) ?? .english }
+        set {
+            self.defaultsState.appLanguageRaw = newValue.rawValue
+            self.userDefaults.set(newValue.rawValue, forKey: "appLanguage")
+            LocalizationManager.shared.setLanguage(newValue)
+        }
+    }
+
     func applyProxyConfiguration() {
         let config = ProxyConfiguration(
             enabled: self.proxyEnabled,

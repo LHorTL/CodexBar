@@ -49,6 +49,7 @@ struct CodexBarApp: App {
         _settings = State(wrappedValue: settings)
         _store = State(wrappedValue: store)
         self.account = account
+        LocalizationManager.shared.setLanguage(settings.appLanguage)
         CodexBarLog.setLogLevel(settings.debugLogLevel)
         self.appDelegate.configure(
             store: store,

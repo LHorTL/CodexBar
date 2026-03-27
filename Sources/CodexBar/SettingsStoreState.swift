@@ -41,4 +41,5 @@ struct SettingsDefaultsState {
     var proxyUsername: String
     var proxyPassword: String
     var claudeDynamicRefreshEnabled: Bool
+    var appLanguageRaw: String
 }
