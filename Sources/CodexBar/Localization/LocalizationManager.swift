@@ -8,7 +8,7 @@ final class LocalizationManager: @unchecked Sendable {
     private static let resourceBundle: Bundle = .module
 
     private(set) var currentLanguage: AppLanguage = .english
-    private(set) var bundle: Bundle = Self.resourceBundle
+    private(set) var bundle: Bundle = .module
 
     func setLanguage(_ language: AppLanguage) {
         self.currentLanguage = language
