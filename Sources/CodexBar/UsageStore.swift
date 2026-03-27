@@ -501,9 +501,17 @@ final class UsageStore {
                     let hadActivity = monitor.consumeActivity()
                     await self.updateDynamicRefreshState(hadActivity: hadActivity)
 
-                    // If idle beyond threshold, skip this refresh cycle.
                     let idle = await self.idleTickCount
                     if idle >= dynamicRefreshIdleThreshold {
+                        // Fully paused: wait until activity resumes, checking periodically.
+                        while !Task.isCancelled {
+                            try? await Task.sleep(for: .seconds(30))
+                            if monitor.consumeActivity() {
+                                await self.updateDynamicRefreshState(hadActivity: true)
+                                break
+                            }
+                        }
+                        // Activity resumed — fall through to refresh on next loop iteration.
                         continue
                     }
                 }
