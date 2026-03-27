@@ -5,17 +5,19 @@ import Observation
 final class LocalizationManager: @unchecked Sendable {
     static let shared = LocalizationManager()
 
+    private static let resourceBundle: Bundle = .module
+
     private(set) var currentLanguage: AppLanguage = .english
-    private(set) var bundle: Bundle = .main
+    private(set) var bundle: Bundle = Self.resourceBundle
 
     func setLanguage(_ language: AppLanguage) {
         self.currentLanguage = language
-        if let path = Bundle.main.path(forResource: language.rawValue, ofType: "lproj"),
+        if let path = Self.resourceBundle.path(forResource: language.rawValue, ofType: "lproj"),
            let langBundle = Bundle(path: path)
         {
             self.bundle = langBundle
         } else {
-            self.bundle = .main
+            self.bundle = Self.resourceBundle
         }
     }
 
