@@ -1,9 +1,8 @@
 import Foundation
 import Observation
 
-@MainActor
 @Observable
-final class LocalizationManager {
+final class LocalizationManager: @unchecked Sendable {
     static let shared = LocalizationManager()
 
     private(set) var currentLanguage: AppLanguage = .english
