@@ -115,7 +115,7 @@ struct AdvancedPane: View {
                             TextField(
                                 "Port",
                                 value: self.$settings.proxyPort,
-                                format: .number)
+                                format: .number.grouping(.never))
                                 .textFieldStyle(.roundedBorder)
                                 .frame(width: 80)
                         }
