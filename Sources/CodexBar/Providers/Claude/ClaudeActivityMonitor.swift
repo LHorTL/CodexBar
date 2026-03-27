@@ -40,8 +40,8 @@ final class ClaudeActivityMonitor: @unchecked Sendable {
             existingPaths as CFArray,
             FSEventStreamEventId(kFSEventStreamEventIdSinceNow),
             1.0,
-            FSEventStreamCreateFlags(kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagUseCFTypes)
-        ) else { return }
+            FSEventStreamCreateFlags(kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagUseCFTypes))
+        else { return }
 
         self.stream = newStream
         FSEventStreamSetDispatchQueue(newStream, self.queue)

@@ -1,10 +1,12 @@
 import Foundation
 
-enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
+enum AppLanguage: String, CaseIterable, Identifiable {
     case english = "en"
     case simplifiedChinese = "zh-Hans"
 
-    var id: String { self.rawValue }
+    var id: String {
+        self.rawValue
+    }
 
     var displayName: String {
         switch self {

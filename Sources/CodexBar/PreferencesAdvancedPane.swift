@@ -80,12 +80,13 @@ struct AdvancedPane: View {
 
                 SettingsSection(
                     title: L10n.sectionKeychainAccess,
-                    caption: L10n.keychainAccessCaption) {
-                        PreferenceToggleRow(
-                            title: L10n.disableKeychainAccess,
-                            subtitle: L10n.disableKeychainAccessSubtitle,
-                            binding: self.$settings.debugDisableKeychainAccess)
-                    }
+                    caption: L10n.keychainAccessCaption)
+                {
+                    PreferenceToggleRow(
+                        title: L10n.disableKeychainAccess,
+                        subtitle: L10n.disableKeychainAccessSubtitle,
+                        binding: self.$settings.debugDisableKeychainAccess)
+                }
 
                 Divider()
 
