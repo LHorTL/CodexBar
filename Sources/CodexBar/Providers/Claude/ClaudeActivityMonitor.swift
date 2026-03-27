@@ -92,8 +92,8 @@ final class ClaudeActivityMonitor: @unchecked Sendable {
 
     // MARK: - FSEventStream callback
 
-    private static let fsEventCallback: FSEventStreamCallback = {
-        _, info, _, _, _, _ in
+    // swiftlint:disable:next closure_parameter_position
+    private static let fsEventCallback: FSEventStreamCallback = { _, info, _, _, _, _ in
         guard let info else { return }
         let monitor = Unmanaged<ClaudeActivityMonitor>.fromOpaque(info).takeUnretainedValue()
         monitor._activityDetected.withLock { $0 = true }
